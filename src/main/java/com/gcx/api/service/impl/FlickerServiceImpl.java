@@ -1,13 +1,10 @@
 package com.gcx.api.service.impl;
 
 
-import com.gcx.api.elasticrepository.FlickerRepository;
+import com.gcx.api.es.FlickerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gcx.api.common.dataSource.CustomDataSource;
-import com.gcx.api.common.dataSource.DataSourceName;
-import com.gcx.api.common.note.ModelDescription;
 import com.gcx.api.common.util.MyResult;
 import com.gcx.api.dao.FlickerMapper;
 import com.gcx.api.model.Flicker;
@@ -15,19 +12,15 @@ import com.gcx.api.service.FlickerService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
- * @author zhanglin
+ * @author qimy
  * @version 创建时间：2018-03-27 11:16:17
  */
 
 @Service
-@CustomDataSource(value = DataSourceName.DATA_ZW)
-@ModelDescription(value="",key="")
 public class FlickerServiceImpl implements FlickerService {
-
-	@Autowired
-	private FlickerMapper flickerDao;
 
 	@Autowired
 	private FlickerRepository flickerRepository;
@@ -56,10 +49,11 @@ public class FlickerServiceImpl implements FlickerService {
 				return MyResult.ok();
 	}
 
+
 	// 根据ID查看详情
 	public MyResult findById(String tid) {
-		Flicker one = flickerRepository.findOne(tid);
-		return MyResult.ok(one);
+		Optional<Flicker> one = flickerRepository.findById(tid);
+		return MyResult.ok(one.get());
 	}
 	
 }

@@ -13,11 +13,7 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.stereotype.Service;
 
 /**
- *<p>Title:SpringContextHolder</p>
- *<p>Description:以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候取出ApplicaitonContext</p>
- *<p>Company:gcx</p>
- *<p>Author:zhanglin</p>
- *<p>Date:2017年6月20日</p>
+ * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候取出ApplicaitonContext
  */
 @Service
 @Lazy(false)

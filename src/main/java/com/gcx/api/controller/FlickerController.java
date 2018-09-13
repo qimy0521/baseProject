@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gcx.api.common.base.BaseController;
-import com.gcx.api.common.validator.ValidatorUtils;
-import com.gcx.api.common.validator.groups.MajorKey;
 import com.gcx.api.common.util.MyResult;
 import com.gcx.api.model.Flicker;
 import com.gcx.api.service.FlickerService;
@@ -34,7 +31,7 @@ import com.gcx.api.service.FlickerService;
 @RestController
 @Api(value="flickers",description="elasticSerachs测试接口")
 @RequestMapping("/flickers")
-class FlickerController extends BaseController {
+class FlickerControlle {
 
 	@Autowired
 	FlickerService  flickerService;
@@ -54,33 +51,4 @@ class FlickerController extends BaseController {
 		MyResult result = flickerService.addRecord(record);
 		return result;
 	}
-
-	// 删除记录 id
-	@DeleteMapping("/{tids}")
-	@ApiOperation(value = "删除")
-	MyResult delete(@PathVariable("tids")String tids) throws Exception{
-	    ValidatorUtils.isBlank(tids, "参数不能为空或null");
-	    String[] tidsArray=tids.split(",");
-		MyResult result = flickerService.delRecords(tidsArray);
-		return result;
-	}
-
-	// 修改记录 id 要修改的属性
-	@PutMapping
-	@ApiOperation(value = "修改")
-	MyResult update(@RequestBody Flicker record,HttpServletRequest request) throws Exception{
-	    ValidatorUtils.validateEntity(record, MajorKey.class);
-		MyResult result = flickerService.updateRecord(record);
-		return result;
-	}
-
-	// 根据ID查询详情 id
-	@GetMapping("/{tid}")
-	@ApiOperation(value = "查询详情")
-	MyResult get(@PathVariable("tid")String tid) throws Exception{
-	    ValidatorUtils.isBlank(tid, "参数不能为空或null");
-		MyResult result = flickerService.findById(tid);
-		return result;
-	}
-
 }

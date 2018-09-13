@@ -1,8 +1,6 @@
 package com.gcx.api;
 
-import com.gcx.api.common.rabbitMQ.EnumExChangeType;
 import com.rabbitmq.client.*;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;

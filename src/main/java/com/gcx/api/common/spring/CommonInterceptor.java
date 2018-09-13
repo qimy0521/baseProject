@@ -8,15 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-//import com.gcx.api.common.model.User;
-//import com.gcx.api.common.util.UserUtils;
-
 /**
- *<p>Title:CommonInterceptor</p>
- *<p>Description:统一登陆拦截</p>
- *<p>Company:gcx</p>
- *<p>Author:zhanglin</p>
- *<p>Date:2017年9月28日</p>
+ * 拦截器
  */
 public class CommonInterceptor extends HandlerInterceptorAdapter {
 	

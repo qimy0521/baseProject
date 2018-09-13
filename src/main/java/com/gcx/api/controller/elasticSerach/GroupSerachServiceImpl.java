@@ -35,22 +35,22 @@ public class GroupSerachServiceImpl implements GroupSerachService {
         MatchQueryBuilder matchQueryBuilder1 = QueryBuilders.matchQuery("county", flicker.getCounty());
         matchQueryBuilder.boost(150l);
         matchQueryBuilder1.boost(50l);
-        NestedQueryBuilder organizationName = QueryBuilders.nestedQuery("organizationName", matchQueryBuilder1);
+//        NestedQueryBuilder organizationName = QueryBuilders.nestedQuery("organizationName", matchQueryBuilder1);
         boolQueryBuilder.should(matchQueryBuilder);//should 相当于 OR
         boolQueryBuilder.must(matchQueryBuilder1);
-        boolQueryBuilder.should(organizationName);
+//        boolQueryBuilder.should(organizationName);
 
 
 
         //创建搜索的请求
         SearchRequestBuilder searchRequestBuilder = client.prepareSearch(ElasticSerachUtil.NAME_INDEX)
                 .setTypes(ElasticSerachUtil.NAME_TYPE)
-                .setSearchType(SearchType.DFS_QUERY_AND_FETCH)
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                 .setQuery(boolQueryBuilder);
         System.out.print(searchRequestBuilder.toString());
         SearchResponse searchResponse = searchRequestBuilder.execute().actionGet();
         SearchHits hits = searchResponse.getHits();
-        long l = hits.totalHits();
-        return MyResult.ok(l);
+        long totalHits = hits.getTotalHits();
+        return MyResult.ok(totalHits);
     }
 }

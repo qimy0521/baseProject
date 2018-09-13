@@ -27,7 +27,6 @@ public class RestTemplateConfig {
 	@Bean
     @ConditionalOnMissingBean({ RestOperations.class, RestTemplate.class })
     public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
-        // return new RestTemplate(factory);
 
         RestTemplate restTemplate = new RestTemplate(factory);
 
@@ -41,7 +40,6 @@ public class RestTemplateConfig {
             }
         }
         messageConverters.add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
-
         return restTemplate;
     }
 

@@ -10,13 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.gcx.api.common.redis.UserRedisUtils;
-/**
- *<p>Title:Scheduler</p>
- *<p>Description:定时任务</p>
- *<p>Company:gcx</p>
- *<p>Author:zhanglin</p>
- *<p>Date:2018年4月23日</p>
- */
+
 @Component
 public class Scheduler {
 	

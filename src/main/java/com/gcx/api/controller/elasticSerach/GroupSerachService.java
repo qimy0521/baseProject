@@ -6,10 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public interface GroupSerachService {
 
-
-
-
-
     MyResult serach(Flicker flicker);
 
 }

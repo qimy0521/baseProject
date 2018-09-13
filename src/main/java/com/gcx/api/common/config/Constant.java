@@ -1,7 +1,6 @@
 package com.gcx.api.common.config;
 
 /**
- * @author Beauxie
  * @date Created on 2018/04/06
  */
 public class Constant {

@@ -1,4 +1,4 @@
-package com.gcx.api.common.config;
+package com.gcx.api.common.util;
 
 import java.io.*;
 

@@ -1,10 +1,9 @@
 package com.gcx.api.common.model;
 
-import com.gcx.api.common.base.BaseEntity;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class User extends BaseEntity {
+public class User {
     private BigDecimal userId;//用户编号
 
     private String userName;//用户名(融云的Userid)

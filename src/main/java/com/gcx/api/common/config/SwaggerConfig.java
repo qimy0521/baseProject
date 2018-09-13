@@ -11,17 +11,13 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 /**
- *<p>Title:SwaggerConfig</p>
- *<p>Description:Swagger文档  访问地址:http://localhost:端口号/项目名/swagger-ui.html</p>
- *<p>Company:gcx</p>
- *<p>Author:zhanglin</p>
- *<p>Date:2018年2月1日</p>
+ * Swagger文档  访问地址:http://localhost:端口号/项目名/swagger-ui.html
  */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
