@@ -3,11 +3,6 @@ package com.gcx.api.common.mygenerate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** 
- * @author	yang 
- * @version 创建时间：2017年8月4日 上午10:33:14 
- * 类说明:	
- */
 public class Underline2Camel {
     
     /**

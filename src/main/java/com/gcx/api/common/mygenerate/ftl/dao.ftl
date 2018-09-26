@@ -31,9 +31,4 @@ public interface ${table.javaName}Mapper {
 	int findByRecordCount(@Param("record") ${table.javaName} record);
 
     int batchUpdateStatus(@Param("array") String[] ids,@Param("status") String status);
-
-    int batchDelectRecord(@Param("array") String[] ids);
-
-
-
 }

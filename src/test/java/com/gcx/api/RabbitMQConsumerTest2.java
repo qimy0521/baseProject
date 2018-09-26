@@ -5,7 +5,7 @@ import com.rabbitmq.client.*;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 /**
- * @Auther: root
+ * @Auther: qimy
  * @Date: 2018/9/7 17:33
  * @Description:
  */

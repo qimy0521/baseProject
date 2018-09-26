@@ -24,17 +24,12 @@ import com.gcx.api.common.util.CookieUtils;
 import com.gcx.api.common.util.MD5;
 
 
-/** 
- * @author	yang 
- * @version 创建时间：2017年4月18日 下午4:40:14 
- * 类说明:	
+/**
+ * redis 工具类
  */
 @Component
 public class UserRedisUtils {
 	
-	
-//	@Value("${gcxId}")
-//	String gcxId;
 	String gcxId = "GCXID";
 	
     private StringRedisTemplate redisTemplate;
@@ -110,6 +105,7 @@ public class UserRedisUtils {
 	public boolean expireAt(String key,Date date){
 		return redisTemplate.expireAt(key, date);
 	}
+
 	//获取指定前缀的所有记录
 	public Cursor<Entry<Object, Object>>  scan(String key,ScanOptions options){
 		return redisTemplate.opsForHash().scan(key, options);

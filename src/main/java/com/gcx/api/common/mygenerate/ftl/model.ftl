@@ -2,9 +2,6 @@ package com.gcx.${projectName}.model;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-@ApiModel(value="")
 public class ${table.javaName} {
 
 	<#list table.columns as column>
@@ -12,7 +9,6 @@ public class ${table.javaName} {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	</#if>
 	@JsonProperty("${column.javaName}")
-    @ApiModelProperty(value="${column.comment}",name="${column.javaName}",dataType="${column.javaTypeSimple}")
 	private ${column.javaTypeSimple} ${column.javaName};
 
 	</#list> 

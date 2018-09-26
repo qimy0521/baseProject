@@ -7,11 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *<p>Title:StringUtils</p>
- *<p>Description:字符处理类</p>
- *<p>Company:gcx</p>
- *<p>Author:zhanglin</p>
- *<p>Date:2017年7月5日</p>
+ * 字符串操作工具类
  */
 public class StringUtils {
 

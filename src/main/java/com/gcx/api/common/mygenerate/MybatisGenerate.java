@@ -1,6 +1,7 @@
 package com.gcx.api.common.mygenerate;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,48 +20,60 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 /** 
- * @author	yang 
+ * @author	qimy
  * @version 创建时间：2017年8月4日 上午10:18:13 
  * 类说明:	
  */
-public class YangGenerate {
+public class MybatisGenerate {
 
-	private static String projectName = "feesysapi";//项目名
+	private static String projectName = "baseProject";//项目名
 
-	private static String databaseName = "feesys";//数据库名
+	private static String databaseName = "chatm";//数据库名
 
-	private static String tableName = "PAY_PASS";//表名
+	private static String tableName = "t_sitemap";//表名
 
 	private  static String author="qimy";//作者
 
 	private static boolean flag1 = true;//dao、model、mapper开关
 
-	private static boolean flag2 = false;//controller、service、serviceImpl开关
+	private static String workeSpace;//工作空间地址
 
-	private static String workeSpace = "E:\\WorkSpace\\";//工作空间地址
+    private static String basePath;
 
-    private static String basePath = workeSpace + projectName + "\\src\\main\\";//项目的基础目录拼接
-
-    private static String fileURL = workeSpace + projectName + "\\src\\main\\java\\com\\gcx\\feesys\\common";
+    private static String fileURL;
 
 
+   public static void initParam(){
+        File directory = new File("");// 参数为空
+        try {
+            workeSpace = directory.getCanonicalPath();
+            workeSpace= workeSpace.substring(0, workeSpace.lastIndexOf("\\"))+"\\";
+            basePath=workeSpace + projectName + "\\src\\main\\";
+            fileURL=workeSpace + projectName + "\\src\\main\\java\\com\\gcx\\api\\common";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	public static void main(String[] args) throws Exception {
+        initParam();
 		//获取数据库连接
 		Connection conn = getConnection();
 		//获取表信息
 		Table table = getTable(conn);
 		//生成dao、model、mapper
 		if(flag1){
-			freeMarker(table, "dao.ftl", basePath+"java\\com\\gcx\\feesys\\dao", "Mapper.java");
-			freeMarker(table, "model.ftl", basePath+"java\\com\\gcx\\feesys\\model", ".java");
-			freeMarker(table, "mapper.ftl", basePath+"resources\\mapper", "Mapper.xml");
+//			freeMarker(table, "dao.ftl", basePath+"java\\com\\gcx\\api\\dao", "Mapper.java");
+			freeMarker(table, "model.ftl", basePath+"java\\com\\gcx\\api\\model", ".java");
+//			freeMarker(table, "mapper.ftl", basePath+"resources\\mapper", "Mapper.xml");
 		}
-		//生成controller、service、serviceImpl
-		if(flag2){
-			freeMarker(table, "Controller.ftl", basePath+"java\\com\\gcx\\feesys\\controller", "Controller.java");
-			freeMarker(table, "Service.ftl", basePath+"java\\com\\gcx\\feesys\\service", "Service.java");
-			freeMarker(table, "ServiceImpl.ftl", basePath+"java\\com\\gcx\\feesys\\service\\impl", "ServiceImpl.java");
-		}
+
+
+//		//生成controller、service、serviceImpl
+//		if(flag2){
+//			freeMarker(table, "Controller.ftl", basePath+"java\\com\\gcx\\feesys\\controller", "Controller.java");
+//			freeMarker(table, "Service.ftl", basePath+"java\\com\\gcx\\feesys\\service", "Service.java");
+//			freeMarker(table, "ServiceImpl.ftl", basePath+"java\\com\\gcx\\feesys\\service\\impl", "ServiceImpl.java");
+//		}
 
 	}
 
@@ -117,8 +130,7 @@ public class YangGenerate {
 			ResultSet rs1 = stmt1.executeQuery(sqlco);
 	
 			while (rs1.next()) { 
-				
-//				System.out.println(rs1.getString("Field") + "\t:\t"+  rs1.getString("Comment") );
+				System.out.println(rs1.getString("Field") + "\t:\t"+  rs1.getString("Comment") );
 				commentMap.put(rs1.getString("Field"), rs1.getString("Comment"));
 			} 
 			
@@ -154,18 +166,15 @@ public class YangGenerate {
 		return table;
 	}
 
-
-
-
 	//连接数据库
 	public static Connection getConnection() {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://119.90.51.183:3306/" +databaseName+
+			String url = "jdbc:mysql://test118:3306/" +databaseName+
 					"?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true";
-			String user = "root";
-			String pass = "isoftadmin";
+			String user = "looktm-test";
+			String pass = "looktm-test";
 			conn = DriverManager.getConnection(url, user, pass);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -205,14 +214,10 @@ public class YangGenerate {
 			return "INTEGER";
 		if("DATETIME".equals(str))
 			return "TIMESTAMP";
-
 		return str;
 	}
-
-
-
-	//对象属性类型转换 
-	private static String IntToInteger2(String str){
+	//对象属性类型转换
+    private static String IntToInteger2(String str){
 		if("Timestamp".equals(str))
 			return "Date";
 		

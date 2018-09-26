@@ -111,41 +111,27 @@
         '}
     </update>
 
-    <!--批量删除-->
-    <update id="batchDelectRecord">
-        update ${table.tableName}
-        set DELETE_FLAG ='1'
-        WhERE
-        ID IN
-        ${r'
-        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-        '}
-    </update>
-
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="${table.column.javaType}">
 		select
 		<include refid="Base_Column_List" />
 		from ${table.tableName}
-		where  DELETE_FLAG != 1 AND ${table.column.columnName} = ${r"#{"}id,jdbcType=${table.column.columnType}} 
+		where  ${table.column.columnName} = ${r"#{"}id,jdbcType=${table.column.columnType}}
 		LIMIT 1
 	</select>
 
 	<select id="findByRecord" resultMap="BaseResultMap">
 		select
 		<include refid='Base_Column_List' />
-		from ${table.tableName} where DELETE_FLAG != 1
+		from ${table.tableName} where 1=1
 		<include refid='Common_Where_List' />
-		ORDER BY TIME_ADD DESC 
 		<if test="end != -1">
 			limit ${r"#{"}start}, ${r"#{"}end}
 		</if>
 	</select>
 	
 	<select id="findByRecordCount" resultType="int">
-		select count(1) from ${table.tableName} where DELETE_FLAG != 1
+		select count(1) from ${table.tableName} where 1=1
 		<include refid='Common_Where_List' />
 	</select>
 

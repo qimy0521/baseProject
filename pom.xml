@@ -175,6 +175,16 @@
           <version>1.16.18</version>
           <scope>provided</scope>
         </dependency>
+      <dependency>
+          <groupId>ant</groupId>
+          <artifactId>ant</artifactId>
+          <version>1.6.5</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jetbrains</groupId>
+          <artifactId>annotations</artifactId>
+          <version>RELEASE</version>
+      </dependency>
   </dependencies>
     <build>
       <!--导出的jar或者war的名字-->

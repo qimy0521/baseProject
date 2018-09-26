@@ -1,6 +1,5 @@
 package com.gcx.api.common.rabbitMQ;
 
-import com.gcx.api.common.exception.ParameterException;
 import com.gcx.api.common.util.StringUtils;
 import com.rabbitmq.client.Channel;
 
@@ -20,7 +19,7 @@ public abstract class AbstractConsumer implements IConsumer {
         this.name = name;
         this.channel = channel;
         if(StringUtils.isEmpty(name)){
-            throw new ParameterException("名称不能为空");
+            throw new RuntimeException("名称不能为空");
         }
         this.name = name;
         this.channel = channel;

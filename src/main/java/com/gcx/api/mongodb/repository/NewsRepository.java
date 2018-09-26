@@ -3,6 +3,8 @@ package com.gcx.api.mongodb.repository;
 import com.gcx.api.mongodb.model.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -41,7 +43,12 @@ public class NewsRepository {
      * @param news
      */
     public void deleteDataByID(News news){
+        Query query=new Query(Criteria.where("title").is(news.getTitle()));
 
+        mongoTemplate.remove(query);
+
+
+        mongoTemplate.remove(news);
 
     }
 

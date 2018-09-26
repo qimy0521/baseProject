@@ -83,18 +83,15 @@ public class HttpClientPool {
 					.build();
 			
 			// JVM停止或重启时，关闭连接池释放掉连接(跟数据库连接池类似)
-			Runtime.getRuntime().addShutdownHook(new Thread(){
-				@Override
-				public void run() {
-					try {
-						httpClient.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (Throwable ex){
-						ex.printStackTrace();
-					}
-				}
-			});
+			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                try {
+                    httpClient.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Throwable ex){
+                    ex.printStackTrace();
+                }
+            }));
 		}
 		
 		return httpClient;

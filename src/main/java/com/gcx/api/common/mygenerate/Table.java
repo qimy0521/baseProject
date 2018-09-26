@@ -2,11 +2,6 @@ package com.gcx.api.common.mygenerate;
 
 import java.util.ArrayList;
 
-/** 
- * @author	yang 
- * @version 创建时间：2017年8月4日 上午9:59:13 
- * 类说明:	
- */
 public class Table {
 	//表名
 	private String tableName;

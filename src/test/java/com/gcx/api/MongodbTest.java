@@ -32,17 +32,23 @@ public class MongodbTest {
         for(int a=0;a<=3;a++){
             Personlist personlist=new Personlist();
             personlist.setAge("2"+a);
-            personlist.setName("笑笑"+a);
+            personlist.setName("苦苦"+a);
             personlist.setSex("男");
             personlists.add(personlist);
         }
         News news=new News();
         news.setId(UUIDUtils.getUUID());
-        news.setTitle("我是GOUGOU");
+        news.setTitle("我是苦苦");
         news.setPersonlist(personlists);
         newsRepository.insertData(news);
+    }
 
-
+    @Test
+    public void delete(){
+        News news=new News();
+        news.setTitle("我是苦苦");
+        news.setId("");
+        newsRepository.deleteDataByID(news);
 
     }
 

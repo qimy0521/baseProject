@@ -1,9 +1,5 @@
 package com.gcx.api.common.mygenerate;
-/** 
- * @author	yang 
- * @version 创建时间：2017年8月4日 上午10:01:27 
- * 类说明:	
- */
+
 public class Column {
 	//字段名
 	private String columnName;
