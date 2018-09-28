@@ -11,13 +11,9 @@ public class Demo {
 
     public static void main(String[] args) throws IOException {
 
-        int bufferSize=1024*1024*10;//缓冲区大小
+        int bufferSize=1024*1024;//缓冲区大小
 
-        FileSliceReadUtil fileSliceReadUtil=new FileSliceReadUtil(50, bufferSize, 100000, "UTF-8");
-        fileSliceReadUtil.readFile("f:/bjTodoSync.log", new IHandle() {
-            public void handle(String line) {
-                System.out.println(line);
-            }
-        });
+        FileSliceReadUtil fileSliceReadUtil=new FileSliceReadUtil(1, bufferSize, 0, "UTF-8");
+        fileSliceReadUtil.readFile("f:/test.log", line -> System.out.println(">>>>>>>>"+line));
     }
 }

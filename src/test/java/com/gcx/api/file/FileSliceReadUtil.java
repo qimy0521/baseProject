@@ -3,6 +3,8 @@ package com.gcx.api.file;
 import java.io.*;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -26,7 +28,9 @@ public class FileSliceReadUtil {
 
     private long start;//开始位置
 
-    private long sliceSize;//剩余的未读的文件的大小，作为映射文件的大小
+    private StartEndPair startEndPairs;
+
+    private long sliceSize;//分片大小
 
     private String charset=null;//文件编码
 
@@ -43,45 +47,35 @@ public class FileSliceReadUtil {
     }
 
     /**
-     * 文件起始位置
-     */
-    private static class StartEndPair{
-        public long start;
-        public long end;
-
-        @Override
-        public String toString() {
-            return "star="+start+";end="+end;
-        }
-    }
-
-    /**
      * 读取文件
      */
     public void readFile(String filepath,IHandle iHandle) throws IOException {
-
         this.file = new File(filepath);
         if(!this.file.exists())
             throw new IllegalArgumentException("文件不存在！");
         this.handle = iHandle;
         this.readBuff = new byte[bufferSize];
+
         this.fileLength=this.file.length();
-        long everySize = this.fileLength / this.sliceSum;//先用除来计算（这样计算不准确）
+
+        long everySize = this.fileLength / this.sliceSum;//先用除来计算
+
         this.rAccessFile = new RandomAccessFile(this.file,"r");
 
-        rAccessFile.seek(start+everySize);//计算上次读取过的，直接跳过
+        calculateStartEnd(this.start, everySize);
 
-        //计算分片 内存文件大小（如果计算的不够精确的话，会丢失数据）BUG
-        //this.sliceSize = start+everySize - start;
+        rAccessFile.seek(startEndPairs.start);
+        this.sliceSize = startEndPairs.end-startEndPairs.start+1;
 
-        MappedByteBuffer mapBuffer = rAccessFile.getChannel().map(FileChannel.MapMode.READ_ONLY,start,everySize);
+        MappedByteBuffer mapBuffer = rAccessFile.getChannel().map(FileChannel.MapMode.READ_ONLY,startEndPairs.start,sliceSize);
+
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        for(int offset=0;offset<everySize;offset+=bufferSize){
+        for(int offset=0;offset<sliceSize;offset+=bufferSize){
             int readLength;
-            if(offset+bufferSize<=everySize){
+            if(offset+bufferSize<=sliceSize){
                 readLength = bufferSize;
             }else{
-                readLength = (int) (everySize-offset);
+                readLength = (int) (sliceSize-offset);
             }
             mapBuffer.get(readBuff, 0, readLength);
 
@@ -96,6 +90,34 @@ public class FileSliceReadUtil {
             }
         }
     }
+
+
+    /**
+     * 计算文件起始位置
+     * @param start 开始位置
+     * @param size 分片大小
+     * @throws IOException
+     */
+    private void calculateStartEnd(long start,long size) throws IOException{
+        if(start>fileLength-1){
+            return;
+        }
+        startEndPairs = new StartEndPair();
+        startEndPairs.start=start;
+        long endPosition = start+size-1;
+        if(endPosition>=fileLength-1){
+            startEndPairs.end=fileLength-1;
+            return;
+        }
+        startEndPairs.end=endPosition;
+    }
+
+
+    private static class StartEndPair{
+        public long start;
+        public long end;
+    }
+
     private void handle(byte[] bytes) throws UnsupportedEncodingException {
         String line = null;
         if(this.charset==null){
