@@ -39,9 +39,6 @@ public class GroupSerachServiceImpl implements GroupSerachService {
         boolQueryBuilder.should(matchQueryBuilder);//should 相当于 OR
         boolQueryBuilder.must(matchQueryBuilder1);
 //        boolQueryBuilder.should(organizationName);
-
-
-
         //创建搜索的请求
         SearchRequestBuilder searchRequestBuilder = client.prepareSearch(ElasticSerachUtil.NAME_INDEX)
                 .setTypes(ElasticSerachUtil.NAME_TYPE)

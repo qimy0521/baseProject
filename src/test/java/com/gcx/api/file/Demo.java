@@ -10,9 +10,7 @@ import java.io.IOException;
 public class Demo {
 
     public static void main(String[] args) throws IOException {
-
         int bufferSize=1024*1024;//缓冲区大小
-
         FileSliceReadUtil fileSliceReadUtil=new FileSliceReadUtil(1, bufferSize, 0, "UTF-8");
         fileSliceReadUtil.readFile("f:/test.log", line -> System.out.println(">>>>>>>>"+line));
     }

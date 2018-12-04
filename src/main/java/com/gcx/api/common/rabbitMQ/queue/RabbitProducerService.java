@@ -1,6 +1,5 @@
 package com.gcx.api.common.rabbitMQ.queue;
 
-import com.gcx.api.common.exception.ParameterException;
 import com.gcx.api.common.rabbitMQ.AbstractProducer;
 import com.rabbitmq.client.Channel;
 
@@ -23,7 +22,6 @@ public class RabbitProducerService extends AbstractProducer {
         try {
             init();
         } catch (IOException e) {
-            throw new ParameterException("初始化失败");
         }
     }
 
@@ -42,11 +40,9 @@ public class RabbitProducerService extends AbstractProducer {
     public void send(byte[] bytes) {
         try {
             if(channel==null){
-                throw new ParameterException("未初始化");
             }
             channel.basicPublish("",this.queueName,null,bytes);
         } catch (IOException e) {
-            throw new ParameterException("消息发送失败");
         }
     }
 }

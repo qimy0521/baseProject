@@ -10,19 +10,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ${table.javaName}Mapper {
 
-	int insert(${table.javaName} record);
-
-	int insertSelective(${table.javaName} record);
-
 	int updateByPrimaryKey(${table.javaName} record);
 
 	int updateByPrimaryKeySelective(${table.javaName} record);
 
 	int deleteByPrimaryKey(Long id);
-
-	int deleteLogicById(@Param("deleteFlag") int deleteFlag, @Param("id") ${table.column.javaTypeSimple} id);
-
-	int deleteLogicByIds(@Param("deleteFlag") int deleteFlag, @Param("ids") List<${table.column.javaTypeSimple}> ids);
 
 	${table.javaName} selectByPrimaryKey(${table.column.javaTypeSimple} id);
 

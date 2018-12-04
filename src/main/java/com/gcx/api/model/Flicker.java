@@ -19,6 +19,8 @@ public class Flicker implements Serializable {
     private String ID;//ID
     @Field(type = FieldType.Integer,   store = true)
     private Integer classify;//分类(1表扬2激励)
+    @Field(type = FieldType.Integer,   store = true)
+    private Integer claSsify;//分类(1表扬2激励)
     @Field(type = FieldType.Text,  store = true)
     private String county;//区县
     @Field(type = FieldType.Text,   store = true)

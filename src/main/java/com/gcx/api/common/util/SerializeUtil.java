@@ -1,6 +1,5 @@
 package com.gcx.api.common.util;
 
-import com.gcx.api.common.exception.ParameterException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -22,11 +21,10 @@ public class SerializeUtil {
 	 * serialize
 	 * @param obj
 	 * @return
-	 * @throws ParameterException
 	 * @author	Cai
 	 * @time	2016年9月26日-下午2:56:20
 	 */
-	public static byte[] serialize(Serializable obj) throws ParameterException {
+	public static byte[] serialize(Serializable obj)  {
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(baos);  
@@ -35,7 +33,7 @@ public class SerializeUtil {
 			oos.close();
 			return baos.toByteArray();
 		} catch (IOException e) {
-			throw new ParameterException("序列化失败");
+		    return null;
 		}
 	}
 	
@@ -44,12 +42,11 @@ public class SerializeUtil {
 	 * deserialize
 	 * @param bytes
 	 * @return
-	 * @throws ParameterException
 	 * @author	Cai
 	 * @time	2016年9月26日-下午2:57:02
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T extends Serializable> T deserialize(byte[] bytes) throws ParameterException {
+	public static <T extends Serializable> T deserialize(byte[] bytes){
 		try {
 			ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 			ObjectInputStream ois = new ObjectInputStream(bais);  
@@ -58,9 +55,9 @@ public class SerializeUtil {
 			bais.close(); 
 			return t;
 		} catch (ClassNotFoundException e) {
-			throw new ParameterException("序列化失败，类型不存在");
+            return null;
 		} catch (IOException e) {
-			throw new ParameterException("反序列化失败");
+            return null;
 		}
 	}
 

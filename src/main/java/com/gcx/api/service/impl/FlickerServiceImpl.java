@@ -3,6 +3,7 @@ package com.gcx.api.service.impl;
 
 import com.gcx.api.es.FlickerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.gcx.api.common.util.MyResult;
@@ -25,9 +26,11 @@ public class FlickerServiceImpl implements FlickerService {
 	@Autowired
 	private FlickerRepository flickerRepository;
 
-	// 查询所有记录 
+	// 查询所有记录
+    @Cacheable(value = "flicker",key = "#root.methodName")
 	public MyResult findAllRecords(Flicker record) {
 		List<Flicker> resultList=new ArrayList<Flicker>();
+
 		Iterable<Flicker> all = flickerRepository.findAll();
 		all.forEach((flicker)->resultList.add(flicker));
 		return MyResult.ok(resultList);

@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
  * @Description: 用多线程实现一个进度条
  */
 public class ConsoleProgressBar {
+
     private long minimum = 0; // 进度条起始值
 
     private long maximum = 100; // 进度条最大值
@@ -94,10 +95,10 @@ public class ConsoleProgressBar {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        ConsoleProgressBar cpb = new ConsoleProgressBar(0, 100, 30, '#');
+        ConsoleProgressBar cpb = new ConsoleProgressBar(1, 100, 30, '>');
         for (int i = 1; i <= 100; i++) {
             cpb.show(i);
-            Thread.sleep(100);
+            Thread.sleep(500);
         }
     }
 }

@@ -6,9 +6,7 @@ public class ${table.javaName} {
 
 	<#list table.columns as column>
 	<#if column.javaTypeSimple =='Date'&&column.javaName!='timeAdd'&&column.javaName!='timeAudit'> 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	</#if>
-	@JsonProperty("${column.javaName}")
 	private ${column.javaTypeSimple} ${column.javaName};
 
 	</#list> 

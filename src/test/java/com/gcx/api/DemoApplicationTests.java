@@ -15,7 +15,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest()
 public class DemoApplicationTests {
     @Test
     public void generateAsciiDocs() throws Exception {
@@ -24,7 +24,7 @@ public class DemoApplicationTests {
                 .withMarkupLanguage(MarkupLanguage.ASCIIDOC)
                 .build();
 
-        Swagger2MarkupConverter.from(new URL("http://localhost:8081/myProject/v2/api-docs"))
+        Swagger2MarkupConverter.from(new URL("http://localhost:8001/ff/v2/api-docs"))
                 .withConfig(config)
                 .build()
                 .toFile(Paths.get("src/docs/asciidoc/generated/index"));

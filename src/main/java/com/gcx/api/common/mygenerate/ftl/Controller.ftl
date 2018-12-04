@@ -21,7 +21,6 @@ import com.gcx.${projectName}.service.${table.javaName}Service;
  * @version 创建时间：${time} 
  */
 @Controller
-@Api(value="",description="")
 @RequestMapping("${table.javaName2}Controller")
 public class ${table.javaName}Controller {
 

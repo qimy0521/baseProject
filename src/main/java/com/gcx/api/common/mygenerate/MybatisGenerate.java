@@ -28,9 +28,9 @@ public class MybatisGenerate {
 
 	private static String projectName = "baseProject";//项目名
 
-	private static String databaseName = "chatm";//数据库名
+	private static String databaseName = "looktm";//数据库名
 
-	private static String tableName = "t_sitemap";//表名
+	private static String tableName = "corp_dljg";//表名
 
 	private  static String author="qimy";//作者
 
@@ -62,9 +62,9 @@ public class MybatisGenerate {
 		Table table = getTable(conn);
 		//生成dao、model、mapper
 		if(flag1){
-//			freeMarker(table, "dao.ftl", basePath+"java\\com\\gcx\\api\\dao", "Mapper.java");
+			freeMarker(table, "dao.ftl", basePath+"java\\com\\gcx\\api\\dao", "Mapper.java");
 			freeMarker(table, "model.ftl", basePath+"java\\com\\gcx\\api\\model", ".java");
-//			freeMarker(table, "mapper.ftl", basePath+"resources\\mapper", "Mapper.xml");
+			freeMarker(table, "mapper.ftl", basePath+"resources\\mapper", "Mapper.xml");
 		}
 
 

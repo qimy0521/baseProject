@@ -31,7 +31,7 @@ import com.gcx.api.service.FlickerService;
 @RestController
 @Api(value="flickers",description="elasticSerachs测试接口")
 @RequestMapping("/flickers")
-class FlickerControlle {
+public class FlickerController {
 
 	@Autowired
 	FlickerService  flickerService;

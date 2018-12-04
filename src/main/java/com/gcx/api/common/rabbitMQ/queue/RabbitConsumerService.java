@@ -1,6 +1,5 @@
 package com.gcx.api.common.rabbitMQ.queue;
 
-import com.gcx.api.common.exception.ParameterException;
 import com.gcx.api.common.rabbitMQ.AbstractConsumer;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
@@ -28,7 +27,6 @@ public class RabbitConsumerService extends AbstractConsumer {
         try {
             init();
         } catch (IOException e) {
-           throw new ParameterException("初始话失败");
         }
     }
 
