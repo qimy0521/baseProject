@@ -23,7 +23,6 @@ public class CompletableFutureTest {
                 CompletableFuture.runAsync(() -> {
                     try {
                         Thread.sleep(0);
-
                         System.out.println("hello");
                     } catch (InterruptedException e) {
                         e.printStackTrace();
