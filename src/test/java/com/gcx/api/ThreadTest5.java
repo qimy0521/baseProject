@@ -5,7 +5,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadTest5 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         int corePoolSize = 2;
         int maximumPoolSize = 9;
         long keepAliveTime = 10;
@@ -18,6 +18,12 @@ public class ThreadTest5 {
             MyTask task = new MyTask(String.valueOf(i));
             threadPoolExecutor.execute(task);
         }
+        int activeCount = threadPoolExecutor.getActiveCount();
+        System.out.println("活动线程数"+activeCount);
+        Thread.sleep(11000L);
+        int corePoolSize1 = threadPoolExecutor.getCorePoolSize();
+        int activeCount1 = threadPoolExecutor.getActiveCount();
+        System.out.println("活动线程数,超时后"+activeCount1+"核心线程数"+corePoolSize1);
         System.in.read();
     }
     static class NameTreadFactory implements ThreadFactory {
