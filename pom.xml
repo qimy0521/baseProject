@@ -203,6 +203,13 @@
           <artifactId>annotations</artifactId>
           <version>RELEASE</version>
       </dependency>
+      <!--法大大集成-->
+      <dependency>
+          <groupId>fdd-2.4.0</groupId>
+          <artifactId>com.fdd</artifactId>
+          <version>2.4.0</version>
+      </dependency>
+
   </dependencies>
     <build>
       <!--导出的jar或者war的名字-->
