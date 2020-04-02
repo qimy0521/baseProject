@@ -1,4 +1,4 @@
-package com.gcx.api;
+package com.gcx.api.leetcode;
 
 import lombok.Getter;
 import lombok.Setter;

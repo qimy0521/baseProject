@@ -37,6 +37,7 @@ public class auth4fadada {
     private String template_id="xmxc001";
     private String transaction_id="123456";
     private String email="qimy0521@gmail.com";
+    private String openUser_id;
     private File file;
     private StringBuffer response = new StringBuffer("==================Welcome ^_^ ==================");
 
@@ -44,13 +45,14 @@ public class auth4fadada {
     public void before() {
         String timeStamp = HttpsUtil.getTimeStamp();
 
-        customer_name = ConfigUtil.getPersonName();
+        customer_name = "齐曼玉";
         contract_id = "CONT" + timeStamp;// 直接上传接口合同编号
         template_id = "TEMP" + timeStamp;// 模板编号
         transaction_id = "TRAN_" + timeStamp;// 手动签交易号
-        email = "ep" + timeStamp + "@fadada.com";// 个人邮箱
-        id_card = "";// 身份证号码;
-        mobile = "";// 手机号;
+        openUser_id = "OPEN_" + timeStamp;// 用户在我们系统的ID
+        email = "qimy0521@gmail.com";// 个人邮箱
+        id_card = "41138119950521741X";// 身份证号码;
+        mobile = "15537815712";// 手机号;
         file = new File(ConfigUtil.getFilePath());
 
         response.append("\n").append("名字:").append(customer_name);
@@ -74,7 +76,7 @@ public class auth4fadada {
 //        getAuthCompanyurl();//2获取企业实名认证地址
 //        getAuthPersonurl();//3获取个人实名认证地址
 //        findPersonCertInfo();//17 查询个人实名认证信息
-//        findCompanyCertInfo();//18 查询企业实名认证信息
+        findCompanyCertInfo();//18 查询企业实名认证信息
 //        GetFileForUUID();//19 通过uuid下载文件
 //        ApplyCert();//4实名证书申请
 //        ApplyNumCert();//5编号证书申请
@@ -101,28 +103,34 @@ public class auth4fadada {
     }
 
     /*=============注册账号=============*/
+    @Test
     public void regAccount(){
         response.append("\n").append("注册账号:");
         FddClientBase base = new FddClientBase(APP_ID,APP_SECRET,V,HOST);
-        String open_id = transaction_id;
-        String account_type = "1";
+        String open_id = openUser_id;
+        //类型 1 个人 2 企业
+        String account_type = "2";
         String result =base.invokeregisterAccount(open_id,account_type);
+        Object parse = JSONObject.parse(result);
+
+
         response.append("\n").append(result);
     }
 
     /*=============获取企业实名认证地址=============*/
+    @Test
     public void getAuthCompanyurl(){
         response.append("\n").append("获取企业实名认证地址:");
         GetCompanyVerifyUrl comverify = new GetCompanyVerifyUrl(APP_ID,APP_SECRET,V,HOST);
         CompanyInfoINO companyInfo = new CompanyInfoINO();
-        companyInfo.setCompany_name("");
-        companyInfo.setCredit_no("");
+        companyInfo.setCompany_name("深圳市茶小点有点公司");
+        companyInfo.setCredit_no("41978211");
         companyInfo.setCredit_image_path("");
 
         BankInfoINO bankInfo = new BankInfoINO();
-        bankInfo.setBank_name("");
-        bankInfo.setBank_id("");
-        bankInfo.setSubbranch_name("");
+        bankInfo.setBank_name("招商银行");
+        bankInfo.setBank_id("127683928347");
+        bankInfo.setSubbranch_name("中关村支行");
 
         LegalInfoINO legalInfo = new LegalInfoINO();
         legalInfo.setLegal_name("");
@@ -135,14 +143,17 @@ public class auth4fadada {
         agentInfo.setAgent_id("");
         agentInfo.setAgent_mobile("");
         agentInfo.setAgent_id_front_path("");
-        String customer_id = "";//必填
+
+
+        //基本参数
+        String customer_id = "8906684F306ABA8A4FC24F5B1B3FA545";//必填
         /**
          * 实名认证套餐类型
          * 0：标准方案（对公打款+纸质审核）默认0；
          * 1：对公打款；
          * 2：纸质审核',
          */
-        String verifyed_way = "";
+        String verifyed_way = "0";
         String page_modify = "1";//必填
 		String m_verified_way = "0";//实名认证套餐类型
 
@@ -151,7 +162,7 @@ public class auth4fadada {
         String return_url = "http://www.baidu.com";//可填
        String result = comverify.invokeCompanyVerifyUrl(companyInfo,bankInfo,legalInfo
                 ,agentInfo, customer_id,verifyed_way,m_verified_way,page_modify,
-                company_principal_type,return_url,notify_url,"1","2");
+                company_principal_type,return_url,notify_url,"1","1");
         response.append("\n").append(result);
         String data = JSON.parseObject(result).getString("data");
         if (null !=data){
@@ -196,10 +207,11 @@ public class auth4fadada {
         response.append("\n").append(result);
     }
     /*=============查询企业实名认证信息=============*/
+    @Test
     public void findCompanyCertInfo(){
         response.append("\n").append("查询企业实名认证信息:");
         FindCertInfo personCertInfo = new FindCertInfo(APP_ID,APP_SECRET,V,HOST);
-        String verified_serialno = "";
+        String verified_serialno = "1ade878428754efaba8666c27ebb3082";
         String result = personCertInfo.invokeFindPersonCert(verified_serialno,
                 "2");
         response.append("\n").append(result);
@@ -231,11 +243,12 @@ public class auth4fadada {
         response.append("\n").append(result);
     }
 
+    @Test
     public void addSignature1(){
         response.append("\n").append("印章上传:");
         FddClientBase base = new FddClientBase(APP_ID,APP_SECRET,V,HOST);
-        File imgfile = new File("/Users/octopus/Desktop/timg.jpeg");
-        String result = base.invokeaddSignature("2048DF02C91AAAD81F402C67CDBCC37E",imgfile,"");
+        File imgfile = new File("/Users/octopus/Desktop/签章.png");
+        String result = base.invokeaddSignature("8906684F306ABA8A4FC24F5B1B3FA545",imgfile,"");
         response.append("\n").append(result);
     }
     public void addSignature2(){
@@ -267,6 +280,8 @@ public class auth4fadada {
         String result = base.invokeUploadTemplate(template_id, null, doc_url);
         response.append("\n").append(result);
     }
+
+    @Test
     public void GenerateContract() {
         try {
             response.append("\n").append("合同生成");
@@ -277,26 +292,27 @@ public class auth4fadada {
             paramter = getparamter();
             String dynamic_tables = "";
             dynamic_tables = getdynamic_tables();
-            String result = base.invokeGenerateContract("TEMP20200106143712", "CONT20200106143712", "熊猫星厨模板", font_size, font_type, paramter, dynamic_tables);
+            String result = base.invokeGenerateContract("TEMP20200106143712", "CONT202001061234", "熊猫星厨", font_size, font_type, paramter, dynamic_tables);
             response.append("\n").append(result);
             String viewpdf_url = JSON.parseObject(result).getString("viewpdf_url");
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + viewpdf_url);
+//            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + viewpdf_url);
+            System.out.print("viewpdf_url");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    @Test
     public void extsign(){
         response.append("\n").append("手动签署接口:");
         FddClientBase base = new FddClientBase(APP_ID,APP_SECRET,V,HOST);
         ExtsignReq req = new ExtsignReq();
-        req.setCustomer_id("2048DF02C91AAAD81F402C67CDBCC37E");
+        req.setCustomer_id("8906684F306ABA8A4FC24F5B1B3FA545");
         req.setTransaction_id(transaction_id);
-        req.setContract_id("CONT20200106143712");
-        req.setDoc_title("1");
+        req.setContract_id("CONT202001061234");
         req.setReturn_url("http://www.baidu.com");
-        req.setDoc_title("熊猫星厨");
-        req.setSign_keyword("受托方签字或盖章");
+        req.setDoc_title("熊猫星厨和齐曼玉的合同");
+        req.setSign_keyword("委托方签字或盖章");
         req.setKeyword_strategy("2");
         req.setReturn_url("http://www.baidu.com");
         String result = base.invokeExtSign(req);
@@ -344,10 +360,11 @@ public class auth4fadada {
         String result = extra.invokeDownloadPdf(contract_id);
         response.append("\n").append(result);
     }
+    @Test
     public void contractFiling() {
         response.append("\n").append("合同归档");
         FddClientBase base = new FddClientBase(APP_ID,APP_SECRET,V,HOST);
-		String contract_id = "";
+		String contract_id = "CONT202001061234";
         String result = base.invokeContractFilling(contract_id);
         response.append("\n").append(result);
     }
